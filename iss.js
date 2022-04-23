@@ -32,4 +32,34 @@ const fetchMyIP = function(callback) {
   });
 };
 
-module.exports = { fetchMyIP };
+// const ip = '70.67.230.214'
+
+const fetchCoordsByIP = function(ip, callback) {
+
+  const url = "https://api.freegeoip.app/json/" + ip + "?apikey=db8ecfe0-c29c-11ec-abaa-375097b78fd6";
+  
+  request(url, (error, response, body) => {
+    if (error) {
+      callback(error, null);
+      return;
+    }
+
+    if (response.statusCode !== 200) {
+      const msg = `Status Code ${response.statusCode} when fetching geo-coordinates for IP. Response: ${body}`;
+      callback(Error(msg), null);
+      return;
+    }
+    
+    const { latitude, longitude } = JSON.parse(body);
+    callback(null, { latitude, longitude });
+    //or can do:
+    ////const coords = { latitude: JSON.parse(body).latitude, longitude: JSON.parse(body).longitude };
+    //callback(null, coords);
+  });
+};
+
+
+
+
+
+module.exports = { fetchMyIP, fetchCoordsByIP };
