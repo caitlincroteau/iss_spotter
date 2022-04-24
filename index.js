@@ -42,6 +42,7 @@ nextISSTimesForMyLocation((error, passTimes) => {
   const milliseconds = unixTimestamp * 1000;
   const date = new Date(milliseconds);
   const dateStr = date.toGMTString();
+  console.log(dateStr)
 
   console.log(`Next pass at ${dateStr}-0700 (Pacific Daylight Time) for ${passTimes.duration} seconds!`);
 });
